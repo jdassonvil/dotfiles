@@ -34,6 +34,10 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" More natural split opening
+set splitbelow
+set splitright
+
 " Searching
 set hlsearch
 set incsearch
