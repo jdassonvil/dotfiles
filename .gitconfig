@@ -1,0 +1,14 @@
+[user]    
+    name = Jerome Dassonville
+    email = jerome.dassonville@worldline.com
+[color]
+    ui = true
+[push]
+    default = matching
+[http]
+    postbuffer = 157286400
+    sslverify = false
+[alias]
+    unstash = stash pop
+    undo = git reset --soft HEAD^
+    amend = commit --amend
