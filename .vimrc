@@ -1,8 +1,14 @@
+" Enable loading the plugin files for specific file types
+:filetype plugin on
+
 " enable syntax coloration
 syntax on
 
 " Set encoding
 set encoding=utf-8
+
+" No enpty trailing line
+set noeol
 
 " Completion on files
 set wildmenu
@@ -52,6 +58,9 @@ set wrap "Wrap lines
 " Remap VIM 0 to the fist non blank character
 map 0 ^
 
+" Handle paste gracefully
+"set paste
+
 " Delete trailing white space on save of JS or PY files
  func! DeleteTrailingWS()
    exe "normal mz"
@@ -60,3 +69,38 @@ map 0 ^
 endfunc
 autocmd BufWrite *.js :call DeleteTrailingWS()
 autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.json :call DeleteTrailingWS()
+
+" format with goimports instead of gofmt
+let g:go_fmt_command = "goimports"
+
+" Prevent from using arrow keys
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+" Enable airline fonts and color
+let g:airline_powerline_fonts = 1
+
+" Python
+set autowrite
+" Go
+autocmd FileType go map <C-n> :cnext<CR>
+autocmd FileType go map <C-m> :cprevious<CR>
+autocmd FileType go nnoremap <leader>a :cclose<CR>
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+
+
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
