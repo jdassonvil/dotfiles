@@ -1,5 +1,22 @@
-" Enable loading the plugin files for specific file types
-:filetype plugin on
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+ set rtp+=~/.vim/bundle/Vundle.vim
+ call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'petobens/poet-v'
+Plugin 'dense-analysis/ale'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+let g:ale_linters = {'python': ['flake8', 'black']}
+let g:ale_virtualenv_dir_names = ['env', '.env', 'venv', 'virtualenv', '/Users/jerome/Library/Caches/pypoetry/virtualenvs/mongo-toolbox-XZP5r6KS-py3.8']
 
 " enable syntax coloration
 syntax on
@@ -72,7 +89,7 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.json :call DeleteTrailingWS()
 
 " format with goimports instead of gofmt
-let g:go_fmt_command = "goimports"
+"let g:go_fmt_command = "goimports"
 
 " Prevent from using arrow keys
 noremap <Up> <NOP>
@@ -85,22 +102,4 @@ let g:airline_powerline_fonts = 1
 
 " Python
 set autowrite
-" Go
-autocmd FileType go map <C-n> :cnext<CR>
-autocmd FileType go map <C-m> :cprevious<CR>
-autocmd FileType go nnoremap <leader>a :cclose<CR>
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
-autocmd FileType go nmap <leader>t  <Plug>(go-test)
-
-
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#test#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
-
-autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+let g:syntastic_python_python_exec = 'python3' 
