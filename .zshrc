@@ -103,13 +103,5 @@ source $ZSH/oh-my-zsh.sh
 source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
 PS1='$(kube_ps1)'$PS1
 
-
-# datadog
-export GOPATH="$HOME/datadog"
-export DATADOG_ROOT="$GOPATH/src/github.com/DataDog"
-export PATH="$PATH:$GOPATH/bin:$DATADOG_ROOT/devtools/bin:$DATADOG_ROOT/logs-devenv/bin"
-
-cd $DATADOG_ROOT
-
 # alias
 source $HOME/.bash_aliases
